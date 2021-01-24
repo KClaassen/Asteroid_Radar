@@ -1,33 +1,35 @@
 package com.udacity.asteroidradar.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.udacity.asteroidradar.network.AsteroidApi
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import android.app.Application
+import androidx.lifecycle.*
+import com.udacity.asteroidradar.database.getDatabase
+import com.udacity.asteroidradar.repository.AsteroidsRepository
+import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel(application: Application) : AndroidViewModel(application)  {
 
-    private val _status = MutableLiveData<String>()
-    val status: LiveData<String>
-        get() = _status
+    private val database = getDatabase(application)
+    private val asteroidsRepository = AsteroidsRepository(database)
 
-//    init {
-//        getAsteroidProperties()
-//    }
+    init {
+        viewModelScope.launch {
+            asteroidsRepository.refreshAstroids()
+        }
+    }
 
-//    private fun getAsteroidProperties() {
-//        AsteroidApi.retrofitService.getAsteroids().enqueue(
-//                object: Callback<String> {
-//                    override fun onFailure(call: Call<String>, t: Throwable) {
-//                        _status.value = "Failure: " + t.message
-//                    }
-//
-//                    override fun onResponse(call: Call<String>, response: Response<String>) {
-//                        _status.value = response.body()
-//                    }
-//                })
-//    }
+    val asteroids = asteroidsRepository.asteroids
+
+    /**
+     * Factory for constructing AsteroidListViewModel with parameter
+     */
+    class Factory(val app: Application) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+                @Suppress("UNCHECKED_CAST")
+                return MainViewModel(app) as T
+            }
+            throw IllegalArgumentException("Unable to construct viewmodel")
+        }
+    }
+
 }

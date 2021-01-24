@@ -8,7 +8,7 @@ import androidx.room.*
 interface AsteroidsDao {
 
     //Loads all asteroids from databaseasteroid and returns them as a List
-    @Query("SELECT  * FROM databaseasteroid ORDER BY date DESC")
+    @Query("SELECT  * FROM databaseasteroid")
     fun getAsteroids() : LiveData<List<DatabaseAsteroid>>
 
     //Store values in cache
@@ -19,26 +19,25 @@ interface AsteroidsDao {
 
 @Database(entities = [DatabaseAsteroid::class], version = 1, exportSchema = false)
 abstract class AsteroidDatabase: RoomDatabase() {
-
     abstract val astreoidsDao: AsteroidsDao
+}
 
-    private lateinit var INSTANCE: AsteroidDatabase
+private lateinit var INSTANCE: AsteroidDatabase
 
-    fun getDatabase(context: Context): AsteroidDatabase{
-        synchronized(this){
-            var instance = INSTANCE
+fun getDatabase(context: Context): AsteroidDatabase{
+    synchronized(AsteroidDatabase::class.java){
+        var instance = INSTANCE
 
-            if(instance == null){
-                instance = Room.databaseBuilder(
-                        context.applicationContext,
-                        AsteroidDatabase::class.java,
-                        "asteroids")
-                        .fallbackToDestructiveMigration()
-                        .build()
-                INSTANCE =instance
-            }
-
-            return instance
+        if(instance == null){
+            instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AsteroidDatabase::class.java,
+                    "asteroids")
+                    .fallbackToDestructiveMigration()
+                    .build()
+            INSTANCE =instance
         }
+
+        return instance
     }
 }

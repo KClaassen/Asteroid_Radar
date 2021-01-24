@@ -2,7 +2,7 @@ package com.udacity.asteroidradar.network
 
 import com.squareup.moshi.JsonClass
 import com.udacity.asteroidradar.database.DatabaseAsteroid
-import com.udacity.asteroidradar.domain.Asteroid
+import com.udacity.asteroidradar.Asteroid
 
 
 @JsonClass(generateAdapter = true)
@@ -14,8 +14,7 @@ data class NetworkAsteroid(
         val estimatedDiameter: Double,
         val relativeVelocity: Double,
         val distanceFromEarth: Double,
-        val isPotentiallyHazardous: Boolean,
-        val date: String
+        val isPotentiallyHazardous: Boolean
 )
 
 /**
@@ -25,14 +24,13 @@ fun List<NetworkAsteroid>.asDomainModel(): List<Asteroid>{
     return this.map {
         Asteroid(
                 id = it.id,
-                codeName = it.codeName,
+                codename = it.codeName,
                 closeApproachDate =  it.closeApproachDate,
                 absoluteMagnitude = it.absoluteMagnitude,
                 estimatedDiameter = it.estimatedDiameter,
                 relativeVelocity = it.relativeVelocity,
                 distanceFromEarth = it.distanceFromEarth,
-                isPotentiallyHazardous = it.isPotentiallyHazardous,
-                date = it.date
+                isPotentiallyHazardous = it.isPotentiallyHazardous
         )
     }
 }
@@ -48,8 +46,7 @@ fun List<NetworkAsteroid>.asDatabaseModel(): Array<DatabaseAsteroid>{
                 estimatedDiameter = it.estimatedDiameter,
                 relativeVelocity = it.relativeVelocity,
                 distanceFromEarth = it.distanceFromEarth,
-                isPotentiallyHazardous = it.isPotentiallyHazardous,
-                date = it.date
+                isPotentiallyHazardous = it.isPotentiallyHazardous
         )
     }.toTypedArray()
 }
