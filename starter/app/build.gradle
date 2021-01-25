@@ -63,6 +63,9 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
+    // Logging
+    implementation "com.jakewharton.timber:timber:4.7.1"
+
     implementation "androidx.room:room-runtime:2.2.6"
     kapt "androidx.room:room-compiler:2.2.6"
     // Kotlin Extensions and Coroutines support for Room
