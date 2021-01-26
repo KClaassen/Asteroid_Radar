@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.udacity.asteroidradar.R
+import com.udacity.asteroidradar.adapter.AsteroidsAdapter
 import com.udacity.asteroidradar.databinding.FragmentMainBinding
 
 enum class OptionSelected { TODAY, WEEK, SAVED }
@@ -32,6 +33,11 @@ class MainFragment : Fragment() {
         binding.lifecycleOwner = this
 
         binding.viewModel = viewModel
+
+//added
+        binding.asteroidRecycler.adapter = AsteroidsAdapter(AsteroidsAdapter.AsteroidClickListener {
+            viewModel.showOptionSelected(it)
+        })
 
         setHasOptionsMenu(true)
 
