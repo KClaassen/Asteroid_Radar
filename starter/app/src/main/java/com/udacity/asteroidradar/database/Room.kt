@@ -8,8 +8,14 @@ import androidx.room.*
 interface AsteroidsDao {
 
     //Loads all asteroids from databaseasteroid and returns them as a List
-    @Query("SELECT  * FROM databaseasteroid")
+    @Query("SELECT  * FROM databaseasteroid ORDER BY closeApproachDate DESC")
     fun getAsteroids() : LiveData<List<DatabaseAsteroid>>
+
+    @Query("SELECT * FROM DatabaseAsteroid WHERE closeApproachDate=:today ORDER BY closeApproachDate ASC")
+    fun getAsteroidsToday(today: String): LiveData<List<DatabaseAsteroid>>
+
+    @Query("SELECT * FROM DatabaseAsteroid WHERE closeApproachDate BETWEEN :today AND :seventhDay ORDER BY closeApproachDate ASC")
+    fun getAsteroidsWeek(today: String, seventhDay: String): LiveData<List<DatabaseAsteroid>>
 
     //Store values in cache
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -23,13 +29,14 @@ interface PictureOfDayDao {
     fun getPictureOfDay(): LiveData<DatabasePictureOfDay>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertPictureOfDay(pictureOfDay: DatabasePictureOfDay)
+    suspend fun insertPicture(pictureOfDay: DatabasePictureOfDay)
 }
 
 
-@Database(entities = [DatabaseAsteroid::class], version = 1, exportSchema = false)
+@Database(entities = [DatabaseAsteroid::class, DatabasePictureOfDay::class], version = 1, exportSchema = false)
 abstract class AsteroidDatabase: RoomDatabase() {
-    abstract val astreoidsDao: AsteroidsDao
+    abstract val asteroidsDao: AsteroidsDao
+    abstract val pictureOfDayDao: PictureOfDayDao
 }
 
 private lateinit var INSTANCE: AsteroidDatabase

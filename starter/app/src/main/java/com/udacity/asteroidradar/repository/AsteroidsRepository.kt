@@ -1,6 +1,5 @@
 package com.udacity.asteroidradar.repository
 
-import android.net.Network
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.example.asteroidradarapp.domain.PictureOfDay
@@ -11,10 +10,9 @@ import com.udacity.asteroidradar.api.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.AsteroidDatabase
 import com.udacity.asteroidradar.database.asDomainModel
 import com.udacity.asteroidradar.Asteroid
-import com.udacity.asteroidradar.database.DatabasePictureOfDay
+import com.udacity.asteroidradar.database.asDomainModelPicture
 import com.udacity.asteroidradar.network.AsteroidApi
 import com.udacity.asteroidradar.network.NetworkAsteroid
-import com.udacity.asteroidradar.network.NetworkPictureOfDay
 import com.udacity.asteroidradar.network.asDatabaseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -25,14 +23,23 @@ class AsteroidsRepository(private val database: AsteroidDatabase) {
 
     var AsteroidApiService = AsteroidApi.retrofitService
 
-    /**
-     * Asteroidlist that can be shown on the screen.
-     */
-    val asteroids: LiveData<List<Asteroid>> = Transformations.map(database.astreoidsDao.getAsteroids()) {
+    // Different Options AsteroidLists that can be shown on the screen.
+    val asteroids: LiveData<List<Asteroid>> = Transformations.map(database.asteroidsDao.getAsteroidsToday(getToday())) {
         it.asDomainModel()
     }
 
-    val pictureOfDay: LiveData<PictureOfDay> = Transformations.map(database.)
+    val asteroidsWeek: LiveData<List<Asteroid>> = Transformations.map(database.asteroidsDao.getAsteroidsWeek(getToday(), getSeventhDay())) {
+        it.asDomainModel()
+    }
+
+    val asteroidSaved: LiveData<List<Asteroid>> = Transformations.map(database.asteroidsDao.getAsteroids()) {
+        it.asDomainModel()
+    }
+
+    // Picture of day to be shown on screen
+    val pictureOfDay: LiveData<PictureOfDay> = Transformations.map(database.pictureOfDayDao.getPictureOfDay()) {
+        it.asDomainModelPicture()
+    }
 
 
     suspend fun refreshAstroids() {
@@ -50,15 +57,14 @@ class AsteroidsRepository(private val database: AsteroidDatabase) {
                         it.distanceFromEarth,
                         it.isPotentiallyHazardous)
             }
-            database.astreoidsDao.insertAll(*networkAsteroidList.asDatabaseModel())
+            database.asteroidsDao.insertAll(*networkAsteroidList.asDatabaseModel())
         }
     }
 
     suspend fun refreshPictureOfDay() {
         withContext(Dispatchers.IO) {
-            val jsonResult = AsteroidApiService.getPictureOfDay(API_KEY)
-            val pictureOfDay = jsonResult.asDatabaseModel()
-            database.
+            val pictureOfDay = AsteroidApiService.getPictureOfDay(API_KEY)
+            database.pictureOfDayDao.insertPicture(pictureOfDay.asDatabaseModel())
         }
     }
 }
