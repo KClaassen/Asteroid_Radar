@@ -44,8 +44,8 @@ data class DatabasePictureOfDay(
 
 
 
-fun DatabasePictureOfDay.asDomainModelPicture(): PictureOfDay {
-    return PictureOfDay(
+fun DatabasePictureOfDay.asDomainModelPicture(): com.udacity.asteroidradar.PictureOfDay {
+    return com.udacity.asteroidradar.PictureOfDay(
             url = this.url,
             mediaType = this.mediaType,
             title = this.title

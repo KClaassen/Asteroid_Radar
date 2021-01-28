@@ -37,7 +37,7 @@ class AsteroidsRepository(private val database: AsteroidDatabase) {
     }
 
     // Picture of day to be shown on screen
-    val pictureOfDay: LiveData<PictureOfDay> = Transformations.map(database.pictureOfDayDao.getPictureOfDay()) {
+    val pictureOfDay: LiveData<com.udacity.asteroidradar.PictureOfDay> = Transformations.map(database.pictureOfDayDao.getPictureOfDay()) {
         it.asDomainModelPicture()
     }
 

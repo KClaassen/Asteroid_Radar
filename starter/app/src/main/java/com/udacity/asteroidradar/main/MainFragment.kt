@@ -35,8 +35,8 @@ class MainFragment : Fragment() {
         binding.viewModel = viewModel
 
 //added
-        binding.asteroidRecycler.adapter = AsteroidsAdapter(AsteroidsAdapter.AsteroidClickListener {
-            viewModel.showOptionSelected(it)
+        binding.asteroidRecycler.adapter = AsteroidsAdapter(AsteroidsAdapter.OnClickListener {
+            viewModel.showOptionSelected(OptionSelected.WEEK)
         })
 
         setHasOptionsMenu(true)

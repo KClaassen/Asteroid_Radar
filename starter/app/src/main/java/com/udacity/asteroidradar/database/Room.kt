@@ -39,22 +39,19 @@ abstract class AsteroidDatabase: RoomDatabase() {
     abstract val pictureOfDayDao: PictureOfDayDao
 }
 
+
+
 private lateinit var INSTANCE: AsteroidDatabase
 
-fun getDatabase(context: Context): AsteroidDatabase{
-    synchronized(AsteroidDatabase::class.java){
-        var instance = INSTANCE
-
-        if(instance == null){
-            instance = Room.databaseBuilder(
-                    context.applicationContext,
+fun getDatabase(context: Context): AsteroidDatabase {
+    synchronized(AsteroidDatabase::class.java) {
+        if(!::INSTANCE.isInitialized) {
+            INSTANCE = Room.databaseBuilder(context.applicationContext,
                     AsteroidDatabase::class.java,
                     "asteroids")
                     .fallbackToDestructiveMigration()
                     .build()
-            INSTANCE =instance
         }
-
-        return instance
     }
+    return INSTANCE
 }

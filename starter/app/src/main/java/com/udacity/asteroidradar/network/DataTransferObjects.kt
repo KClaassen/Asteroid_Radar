@@ -69,8 +69,8 @@ data class NetworkPictureOfDay(
 
 //Convert network results to domain objects
 
-fun NetworkPictureOfDay.asDomainModel(): PictureOfDay {
-    return PictureOfDay(
+fun NetworkPictureOfDay.asDomainModel(): com.udacity.asteroidradar.PictureOfDay {
+    return com.udacity.asteroidradar.PictureOfDay(
             url = this.url,
             mediaType = this.mediaType,
             title = this.title
