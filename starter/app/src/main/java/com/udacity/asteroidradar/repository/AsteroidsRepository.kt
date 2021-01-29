@@ -25,20 +25,20 @@ class AsteroidsRepository(private val database: AsteroidDatabase) {
 
     // Different Options AsteroidLists that can be shown on the screen.
     val asteroids: LiveData<List<Asteroid>> = Transformations.map(database.asteroidsDao.getAsteroidsToday(getToday())) {
-        it.asDomainModel()
+        it?.asDomainModel()
     }
 
     val asteroidsWeek: LiveData<List<Asteroid>> = Transformations.map(database.asteroidsDao.getAsteroidsWeek(getToday(), getSeventhDay())) {
-        it.asDomainModel()
+        it?.asDomainModel()
     }
 
     val asteroidSaved: LiveData<List<Asteroid>> = Transformations.map(database.asteroidsDao.getAsteroids()) {
-        it.asDomainModel()
+        it?.asDomainModel()
     }
 
     // Picture of day to be shown on screen
     val pictureOfDay: LiveData<PictureOfDay> = Transformations.map(database.pictureOfDayDao.getPictureOfDay()) {
-        it.asDomainModelPicture()
+        it?.asDomainModelPicture()
     }
 
 

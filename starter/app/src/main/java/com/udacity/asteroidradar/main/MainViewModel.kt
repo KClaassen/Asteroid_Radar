@@ -31,9 +31,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application)  {
     init {
         viewModelScope.launch {
             try {
+                asteroidsRepository.refreshPictureOfDay()
                 showOptionSelected(OptionSelected.TODAY)
                 asteroidsRepository.refreshAstroids()
-                asteroidsRepository.refreshPictureOfDay()
             } catch (e:Exception) {
                 Log.e("MainViewModel", e.message!!)
             }
