@@ -2,7 +2,7 @@ package com.udacity.asteroidradar.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.example.asteroidradarapp.domain.PictureOfDay
+import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.Constants.API_KEY
 import com.udacity.asteroidradar.api.getSeventhDay
 import com.udacity.asteroidradar.api.getToday
@@ -37,7 +37,7 @@ class AsteroidsRepository(private val database: AsteroidDatabase) {
     }
 
     // Picture of day to be shown on screen
-    val pictureOfDay: LiveData<com.udacity.asteroidradar.PictureOfDay> = Transformations.map(database.pictureOfDayDao.getPictureOfDay()) {
+    val pictureOfDay: LiveData<PictureOfDay> = Transformations.map(database.pictureOfDayDao.getPictureOfDay()) {
         it.asDomainModelPicture()
     }
 

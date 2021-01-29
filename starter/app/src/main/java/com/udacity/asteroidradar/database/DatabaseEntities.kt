@@ -2,7 +2,7 @@ package com.udacity.asteroidradar.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.asteroidradarapp.domain.PictureOfDay
+import com.udacity.asteroidradar.PictureOfDay
 import com.udacity.asteroidradar.Asteroid
 
 //Creates the DatabaseAsteroid Database Object
@@ -44,8 +44,8 @@ data class DatabasePictureOfDay(
 
 
 
-fun DatabasePictureOfDay.asDomainModelPicture(): com.udacity.asteroidradar.PictureOfDay {
-    return com.udacity.asteroidradar.PictureOfDay(
+fun DatabasePictureOfDay.asDomainModelPicture(): PictureOfDay {
+    return PictureOfDay(
             url = this.url,
             mediaType = this.mediaType,
             title = this.title

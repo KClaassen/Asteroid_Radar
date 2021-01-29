@@ -1,6 +1,6 @@
 package com.udacity.asteroidradar.network
 
-import com.example.asteroidradarapp.domain.PictureOfDay
+import com.udacity.asteroidradar.PictureOfDay
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.udacity.asteroidradar.database.DatabaseAsteroid
@@ -69,8 +69,8 @@ data class NetworkPictureOfDay(
 
 //Convert network results to domain objects
 
-fun NetworkPictureOfDay.asDomainModel(): com.udacity.asteroidradar.PictureOfDay {
-    return com.udacity.asteroidradar.PictureOfDay(
+fun NetworkPictureOfDay.asDomainModel(): PictureOfDay {
+    return PictureOfDay(
             url = this.url,
             mediaType = this.mediaType,
             title = this.title

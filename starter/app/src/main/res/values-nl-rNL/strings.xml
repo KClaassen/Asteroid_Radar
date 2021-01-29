@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Asteroid Radar</string>
+    <string name="next_week_asteroids" translatable="false">Bekijk week asteroïden</string>
+    <string name="today_asteroids" translatable="false">Bekijk vandaag asteroïden</string>
+    <string name="saved_asteroids" translatable="false">Bekijk opgeslagen asteroïden</string>
+    <string name="close_approach_data_title">Datum dichtbij gekomen</string>
+    <string name="absolute_magnitude_title">Absolute omgang</string>
+    <string name="estimated_diameter_title">Geschatte diameter</string>
+    <string name="relative_velocity_title">Relatieve snelheid</string>
+    <string name="distance_from_earth_title">Afstand tot de aarde</string>
+    <string name="image_of_the_day">Afbeelding van de dag</string>
+    <string name="astronomica_unit_explanation">De astronomische eenheid (au) is een lengte-eenheid, ongeveer de afstand van de aarde tot de zon en gelijk aan ongeveer 150 miljoen kilometer (93 miljoen mijl)</string>
+    <string name="astronomical_unit_explanation_button">Astronomische eenheidsdefinitie</string>
+    <string name="potentially_hazardous_asteroid_image">Potentieel gevaarlijke asteroïde afbeelding</string>
+    <string name="not_hazardous_asteroid_image">Geen gevaarlijke asteroïde afbeelding</string>
+    <string name="this_is_nasa_s_picture_of_day_showing_nothing_yet">Dit is NASA\'s foto van de dag, waarop nog niets te zien is</string>
+    <string name="nasa_picture_of_day_content_description_format">NASA\'s foto van de dag:% s</string>
+</resources>
